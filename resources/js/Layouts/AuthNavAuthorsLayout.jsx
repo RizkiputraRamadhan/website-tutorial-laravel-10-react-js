@@ -31,14 +31,15 @@ return (
                     <div className="hidden sm:flex sm:items-center sm:ms-6">
                         <div className="ms-3 flex relative">
                             <div className="text-sm mr-2">
-                                <p>{user.name}</p>
-                                <button className=' flex ml-auto'> { user.typeuser == 1 ? <span
+                                <p>{user.name.toUpperCase()}</p>
+                                <button className=' flex ml-auto'><a className='mr-2 text-black' href="/"><span
+                                    className="btn btn-xs bg-primary">Home</span></a> { user.typeuser == 1 ? <span
                                         className="btn btn-xs bg-green-700 text-white">Master</span> : user.typeuser ==
                                     2 ?
                                     <span className="btn btn-xs bg-blue-700 text-white">Author</span> : user.typeuser ==
                                     3 ?
                                     <span className="btn btn-xs bg-red-700 text-white">User</span> : 'unknown'
-                                    }</button>
+                                    } </button>
                             </div>
                             <div className="avatar online ">
                                 <div className="w-10 rounded-full">
@@ -84,6 +85,7 @@ return (
                 </div>
                 <div className="shadow-inner rounded-b-2xl mt-2 ">
                     <ul className="menu rounded-box">
+
                         <li>
                             <a href='/authors/dashboard'>
                                 <i class="fa-solid fa-house "></i>
@@ -112,6 +114,12 @@ return (
                             <a href='/logout'>
                                 <i class="fa-solid fa-right-from-bracket"></i>
                                 Logout
+                            </a>
+                        </li>
+                        <li className='bg-primary rounded'>
+                            <a href='/'>
+                                <i class="fa-solid fa-b"></i>
+                                Back To Home
                             </a>
                         </li>
                     </ul>

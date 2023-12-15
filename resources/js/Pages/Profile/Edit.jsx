@@ -77,7 +77,7 @@ return (
                             <h3 className="font-bold">Notification!</h3>
                             <div className="text-xs">{flash.message}</div>
                         </div>
-                        <button onClick={()=> {window.location.href=""}} className="btn btn-sm">Tutup</button>
+                        <button onClick={()=> {window.location.href=""}} className="btn btn-sm">Refresh</button>
                     </div>
                 </>
                 )}
@@ -120,7 +120,7 @@ return (
                             <h3 className="font-bold">Notification!</h3>
                             <div className="text-xs">{flash.message}</div>
                         </div>
-                        <button onClick={()=> {window.location.href=""}} className="btn btn-sm">Tutup</button>
+                        <button onClick={()=> {window.location.href=""}} className="btn btn-sm">Refresh</button>
                     </div>
                 </>
                 )}
@@ -140,7 +140,7 @@ return (
                             <div className="mb-6">
                                 <label htmlFor="text"
                                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    Name Author
+                                    Name Author <span className="text-red-800">*</span>
                                 </label>
                                 <input type="text" id="text"
                                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
@@ -217,7 +217,7 @@ return (
                             <div className="mb-6">
                                 <label htmlFor="text"
                                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    Work As
+                                    Work As <span className="text-red-800">*</span>
                                 </label>
                                 <input type="text" id="text"
                                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
@@ -258,7 +258,7 @@ return (
                             <h3 className="font-bold">Notification!</h3>
                             <div className="text-xs">{flash.message}</div>
                         </div>
-                        <button onClick={()=> {window.location.href=""}} className="btn btn-sm">Tutup</button>
+                        <button onClick={()=> {window.location.href=""}} className="btn btn-sm">Refresh</button>
                     </div>
                 </>
                 )}

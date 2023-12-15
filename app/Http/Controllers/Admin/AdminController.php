@@ -483,6 +483,12 @@ class AdminController extends Controller
     }
     public function TutorialStore(Request $request)
     {
+        $title = $request->title;
+        if (Tutorial::where('title', $title)->exists()) {
+            return redirect()
+                ->back()
+                ->with('message', 'Judul sudah pernah dibuat pastikan cek dipencarian.');
+        }
         $Draft = $request->draft;
         if ($Draft == 0) {
             return redirect()

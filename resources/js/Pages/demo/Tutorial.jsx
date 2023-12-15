@@ -2,7 +2,7 @@ import DemoTutorialLayout from '@/Layouts/DemoTutorialLayout';
 import { Head } from '@inertiajs/react';
 import { usePage } from '@inertiajs/react'
 export default function Dashboard({ auth, showTutor, fkAuthor, fkPlaylist }) {
-const copyLink = `https://kuli-it.my.id/news/${showTutor.title.replace(/ /g, '_' )}`;
+const copyLink = `https://kuli-it.my.id/news/${showTutor.title.replace(/ /g, '-' )}`;
 const copyToClipboard = () => {
 const textArea = document.createElement('textarea');
 textArea.value = copyLink;

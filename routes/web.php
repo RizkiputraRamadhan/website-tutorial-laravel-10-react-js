@@ -1,13 +1,16 @@
 <?php
 
 use Inertia\Inertia;
+use App\Models\Playlist;
 use App\Http\Middleware\roleAdmin;
 use App\Http\Middleware\roleUsers;
 use App\Http\Middleware\roleAuthors;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\profilAuthors;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\HandlerController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\InterfaceController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Users\UsersController;
 use App\Http\Controllers\Authors\AuthorsController;
@@ -23,12 +26,19 @@ use App\Http\Controllers\Authors\AuthorsController;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Home', [
+
+Route::get('/', [InterfaceController::class, 'Home']);
+Route::get('/playlist', [InterfaceController::class, 'Playlist']);
+Route::get('/playlist/{id_playlist}', [InterfaceController::class, 'DetailsPlaylist']);
+Route::get('/author/{id_author}', [InterfaceController::class, 'DetailsAuthors']);
+
+Route::fallback(function () {
+    $playNavbar = Playlist::where('status', 1)->withCount('tutorials')->inRandomOrder()->limit(8)->get();
+    return Inertia::render('errors/404', [
         'auth' => auth()->user(),
+        'playNavbar' => $playNavbar,
     ]);
 });
-
 Route::middleware(['auth'])->group(function () {
     Route::get('/handler', [HandlerController::class, 'Handler']);
     Route::get('/demo/tutorial/{title_id}', [HandlerController::class, 'DemoTutorial']);
@@ -71,18 +81,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/authors/dashboard', [AuthorsController::class, 'Dashboard']);
         Route::post('/authors/authorsStore', [AuthorsController::class, 'AuthorsStore']);
         Route::post('/authors/authorsUpdate/{id}/{id_authors}', [AuthorsController::class, 'AuthorsUpdate']);
-        Route::get('/authors/playlist', [AuthorsController::class, 'Playlist']);
-        Route::post('/authors/playlistStore', [AdminController::class, 'PlaylistStore']);
-        Route::get('/authors/playlistEdit/{id}/{id_playlist}', [AuthorsController::class, 'PlaylistEdit']);
-        Route::post('/authors/playlistUpdate/{id}/{id_playlist}', [AuthorsController::class, 'PlaylistUpdate']);
-        Route::get('/authors/playlistDelete/{id}/{id_playlist}', [AdminController::class, 'PlaylistDelete']);
 
-        //post
-        Route::get('/authors/tutorials', [AuthorsController::class, 'Tutorials']);
-        Route::post('/authors/tutorialStore', [AdminController::class, 'TutorialStore']);
-        Route::get('/authors/tutorDelete/{id}/{title_id}', [AdminController::class, 'TutorDelete']);
-        Route::get('/authors/tutorEdit/{id}/{title_id}', [AuthorsController::class, 'TutorEdit']);
-        Route::post('/authors/tutorialUpdate/{id}', [AuthorsController::class, 'TutorUpdate']);
+        Route::middleware(profilAuthors::class)->group(function () {
+            //playlist
+            Route::get('/authors/playlist', [AuthorsController::class, 'Playlist']);
+            Route::post('/authors/playlistStore', [AdminController::class, 'PlaylistStore']);
+            Route::get('/authors/playlistEdit/{id}/{id_playlist}', [AuthorsController::class, 'PlaylistEdit']);
+            Route::post('/authors/playlistUpdate/{id}/{id_playlist}', [AuthorsController::class, 'PlaylistUpdate']);
+            Route::get('/authors/playlistDelete/{id}/{id_playlist}', [AdminController::class, 'PlaylistDelete']);
+
+            //post
+            Route::get('/authors/tutorials', [AuthorsController::class, 'Tutorials']);
+            Route::post('/authors/tutorialStore', [AdminController::class, 'TutorialStore']);
+            Route::get('/authors/tutorDelete/{id}/{title_id}', [AdminController::class, 'TutorDelete']);
+            Route::get('/authors/tutorEdit/{id}/{title_id}', [AuthorsController::class, 'TutorEdit']);
+            Route::post('/authors/tutorialUpdate/{id}', [AuthorsController::class, 'TutorUpdate']);
+       });
     });
 
     //user

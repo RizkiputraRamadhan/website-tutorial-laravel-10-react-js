@@ -28,13 +28,19 @@ class AuthorsController extends Controller
         $playlist = Playlist::all()->count();
         $users = auth()->user()->id;
         $author = Author::where('user_id', $users)->first();
-        $tutorials = Tutorial::where('author_id', $author->id)
-            ->with('playlist', 'author')
-            ->get();
-        $drafts = $tutorials->where('draft', 2)->count();
-        $publish = $tutorials->where('draft', 1)->count();
 
-        // Mendapatkan informasi perangkat
+        if ($author) {
+            $tutorials = Tutorial::where('author_id', $author->id)
+                ->with('playlist', 'author')
+                ->get();
+            $drafts = $tutorials->where('draft', 2)->count();
+            $publish = $tutorials->where('draft', 1)->count();
+        } else {
+            $tutorials = null;
+            $drafts = 0;
+            $publish = 0;
+        }
+
         $ip = $_SERVER['REMOTE_ADDR'];
         $os = php_uname('s');
 
@@ -43,8 +49,7 @@ class AuthorsController extends Controller
             'Operating System' => $os,
         ];
 
-        // Menyimpan informasi perangkat ke dalam cache (bisa disesuaikan sesuai kebutuhan)
-        Cache::put('device_info', $additionalInfo, 60); // Cache for 60 minutes
+        Cache::put('device_info', $additionalInfo, 60);
 
         return Inertia::render('Authors/Dashboard', [
             'playlist' => $playlist,
@@ -241,22 +246,27 @@ class AuthorsController extends Controller
 
     //tutorial
     public function Tutorials()
-    {
-        $playlists = Playlist::where('status', 1)->get();
-        $users = auth()->user()->id;
-        $playlists = Playlist::where('status', 1)->get();
-        $users = auth()->user()->id;
-        $author = Author::where('user_id', $users)->first();
+{
+    $playlists = Playlist::where('status', 1)->get();
+    $users = auth()->user()->id;
+
+    $author = Author::where('user_id', $users)->first();
+
+    if ($author) {
         $tutorials = Tutorial::where('author_id', $author->id)
             ->with('playlist', 'author')
             ->get();
-
-        return Inertia::render('Authors/Tutorials', [
-            'tutorials' => $tutorials,
-            'playlists' => $playlists,
-            'authors' => $author,
-        ]);
+    } else {
+        $tutorials = collect();
     }
+
+    return Inertia::render('Authors/Tutorials', [
+        'tutorials' => $tutorials,
+        'playlists' => $playlists,
+        'authors' => $author,
+    ]);
+}
+
 
     public function TutorEdit($id)
     {
@@ -280,6 +290,14 @@ class AuthorsController extends Controller
 
     public function TutorUpdate(Request $request, $id)
     {
+        $title = $request->title;
+        $existing = Tutorial::where('title', $title)->first();
+        if ($existing && $existing->id != $id) {
+            return redirect()
+                ->back()
+                ->with('message', 'Judul sudah pernah dibuat.');
+        }
+
         $Draft = $request->draft;
         if ($Draft == 0) {
             return redirect()

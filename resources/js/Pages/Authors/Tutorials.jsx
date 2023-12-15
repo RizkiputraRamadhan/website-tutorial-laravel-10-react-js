@@ -69,7 +69,7 @@ return (
                         <h3 className="font-bold">Notification!</h3>
                         <div className="text-xs">{flash.message}</div>
                     </div>
-                    <button onClick={()=> {window.location.href=""}} className="btn btn-sm">Tutup</button>
+                    <button onClick={()=> {window.location.href=""}} className="btn btn-sm">Refresh</button>
                 </div>
             </>
             )}
@@ -150,6 +150,7 @@ return (
             </div>
         </div>
         <div className="overflow-x-auto">
+        {filteredTutor.length > 0 ? (
             <table className="table">
                 <thead>
                     <tr>
@@ -207,10 +208,15 @@ return (
 
                 </tbody>
             </table>
-            <p className="text-center font-bold text-gray-500 p-3">{filteredTutor.length == 0 ? (
-                <span>--- Upss !! {search} tidak ditemukan ---</span>
-                ) : ''}
+             ) : (
+                <p className="text-center font-bold text-gray-500 p-3">
+                {search ? (
+                    <span>--- Upss !! {search} tidak ditemukan ---</span>
+                ) : (
+                    <span>--- Tidak ada tutorial yang tersedia ---</span>
+                )}
             </p>
+        )}
             {displayedData < filteredTutor.length && ( <button onClick={handleShowMore}
                 className="btn flex mt-5 ml-auto">
                 {`Tampilkan ${Math.min(itemsPerPage, filteredTutor.length - displayedData)} Data Selanjutnya `}

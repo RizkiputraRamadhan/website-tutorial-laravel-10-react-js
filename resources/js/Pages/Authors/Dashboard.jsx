@@ -40,7 +40,7 @@ return (
                                 <h3 className="font-bold">Notification!</h3>
                                 <div className="text-xs">{flash.message}</div>
                             </div>
-                            <button onClick={()=> {window.location.href=""}} className="btn btn-sm">Tutup</button>
+                            <button onClick={()=> {window.location.href=""}} className="btn btn-sm">Refresh</button>
                         </div>
                     </>
                     )}
@@ -120,8 +120,6 @@ return (
                     <div className="stat-title font-bold text-black">Perangkat : {additionalInfo['Operating System']} </div>
                     <div className="stat-title font-bold text-black">IP Address: {additionalInfo.IP}</div>
                     <div className="stat-title font-bold text-black">Peran User: Penulis</div>
-                    <div className="stat-title font-bold text-black">Jam Login : -</div>
-                    <div className="stat-title font-bold text-black">TGL login : -</div>
                 </div>
             </div>
         </div>

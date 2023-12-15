@@ -72,7 +72,7 @@ return (
                         <h3 className="font-bold">Notification!</h3>
                         <div className="text-xs">{flash.message}</div>
                     </div>
-                    <button onClick={()=> {window.location.href=""}} className="btn btn-sm">Tutup</button>
+                    <button onClick={()=> {window.location.href=""}} className="btn btn-sm">Refresh</button>
                 </div>
             </>
             )}
@@ -260,7 +260,7 @@ return (
                         <td>{author.work_as}</td>
                         <td>{author.created_at.split("T")[0]}</td>
                         <th>
-                            <a href={`/authors/${author.id_author}`}> <button className="btn btn-ghost btn-xs"><i
+                            <a href={`/author/${author.id_author}`}> <button className="btn btn-ghost btn-xs"><i
                                         class="fa-solid fa-eye text-indigo-700"></i></button></a>
                             <a href={`/admin/authorsEdit/${author.id}/${author.id_author}`}><button
                                     className="btn btn-ghost btn-xs"><i

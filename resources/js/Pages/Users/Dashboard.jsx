@@ -26,7 +26,7 @@ return (
                                     <h3 className="font-bold">Welcome To Kuli IT Tecno!</h3>
                                     <div className="text-xs">{flash.message}</div>
                                 </div>
-                                <button onClick={() => {window.location.href=""}} className="btn btn-sm">Tutup</button>
+                                <button onClick={() => {window.location.href=""}} className="btn btn-sm">Refresh</button>
                             </div>
                         </>
                         )}
