@@ -125,7 +125,7 @@ return (
                                     <a href={`/admin/tutorDraft/${tutor.id}`}> <button
                                             className="btn btn-ghost btn-xs"><i
                                                 class="fa-solid fa-paper-plane text-green-600"></i></button></a>
-                                    <a href={`/demo/tutorial/${tutor.title_id}`}> <button className="btn btn-ghost btn-xs"><i
+                                    <a href={`/${tutor.title_id}`}> <button className="btn btn-ghost btn-xs"><i
                                                 class="fa-solid fa-eye text-indigo-700"></i></button></a>
                                     <a href={`/admin/tutorEdit/${tutor.id}/${tutor.title_id}`}><button
                                             className="btn btn-ghost btn-xs"><i

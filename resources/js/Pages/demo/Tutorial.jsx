@@ -1,4 +1,4 @@
-import DemoTutorialLayout from '@/Layouts/DemoTutorialLayout';
+import DemoTutorialLayout from '@/Layouts/ShowTutorialLayout';
 import { Head } from '@inertiajs/react';
 import { usePage } from '@inertiajs/react'
 export default function Dashboard({ auth, showTutor, fkAuthor, fkPlaylist }) {

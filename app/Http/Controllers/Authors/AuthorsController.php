@@ -36,9 +36,10 @@ class AuthorsController extends Controller
             $drafts = $tutorials->where('draft', 2)->count();
             $publish = $tutorials->where('draft', 1)->count();
         } else {
-            $tutorials = null;
             $drafts = 0;
             $publish = 0;
+            return redirect('/profile')
+                ->with('message', 'Lengkapi Dulu profil anda sebagai author.');
         }
 
         $ip = $_SERVER['REMOTE_ADDR'];

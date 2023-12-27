@@ -1,7 +1,7 @@
 import AuthNavAuthorsLayout from '@/Layouts/AuthNavAuthorsLayout';
 import { Head } from '@inertiajs/react';
 import { usePage } from '@inertiajs/react'
-export default function Dashboard({ auth, tutorials, drafts,publish ,playlist }, props) {
+export default function Dashboard({ auth, tutorials, drafts ,publish ,playlist }, props) {
 const { flash, additionalInfo } = usePage().props
 
 const getOperatingSystemIcon = (os) => {

@@ -7,7 +7,6 @@ use App\Http\Middleware\roleUsers;
 use App\Http\Middleware\roleAuthors;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\profilAuthors;
-use Illuminate\Foundation\Application;
 use App\Http\Controllers\HandlerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InterfaceController;
@@ -27,24 +26,23 @@ use App\Http\Controllers\Authors\AuthorsController;
 */
 
 
+//auth
+Route::get('login', [HandlerController::class, 'login'])->name('login');
+Route::post('login', [HandlerController::class, 'authenticate']);
+Route::get('register', [HandlerController::class, 'register'])->name('register');
+Route::post('register', [HandlerController::class, 'AuthReg']);
+Route::get('logout', [HandlerController::class, 'logout'])->name('logout');
+//lading
 Route::get('/', [InterfaceController::class, 'Home']);
 Route::get('/playlist', [InterfaceController::class, 'Playlist']);
 Route::get('/playlist/{id_playlist}', [InterfaceController::class, 'DetailsPlaylist']);
 Route::get('/author/{id_author}', [InterfaceController::class, 'DetailsAuthors']);
+Route::get('/{title_id}', [InterfaceController::class, 'ShowPost']);
 
-Route::fallback(function () {
-    $playNavbar = Playlist::where('status', 1)->withCount('tutorials')->inRandomOrder()->limit(8)->get();
-    return Inertia::render('errors/404', [
-        'auth' => auth()->user(),
-        'playNavbar' => $playNavbar,
-    ]);
-});
-Route::middleware(['auth'])->group(function () {
-    Route::get('/handler', [HandlerController::class, 'Handler']);
-    Route::get('/demo/tutorial/{title_id}', [HandlerController::class, 'DemoTutorial']);
-});
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/handler', [HandlerController::class, 'Handler']);
+    Route::get('/demo/tutorial/{title_id}', [HandlerController::class, 'DemoTutorial']);
     //admin
     Route::middleware(roleAdmin::class)->group(function () {
         Route::get('/admin/dashboard', [AdminController::class, 'Dashboard']);
@@ -111,5 +109,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
+Route::fallback(function () {
+    $playNavbar = Playlist::where('status', 1)->withCount('tutorials')->inRandomOrder()->limit(8)->get();
+    return Inertia::render('errors/404', [
+        'auth' => auth()->user(),
+        'playNavbar' => $playNavbar,
+    ]);
+});
 require __DIR__ . '/auth.php';

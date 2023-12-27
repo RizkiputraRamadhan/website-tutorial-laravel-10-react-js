@@ -192,7 +192,7 @@ return (
                             <td>{tutor.updated_at.split("T")[0]}</td>
                             <th>
 
-                                <a href={`/demo/tutorial/${tutor.title_id}`}> <button
+                                <a href={`/${tutor.title_id}`}> <button
                                         className="btn btn-ghost btn-xs"><i
                                             class="fa-solid fa-eye text-indigo-700"></i></button></a>
                                 <a href={`/authors/tutorEdit/${tutor.id}/${tutor.title_id}`}><button

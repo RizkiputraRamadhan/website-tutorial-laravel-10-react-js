@@ -6,7 +6,7 @@ import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 
-export default function Authenticated({ user, header, children }) {
+export default function ShowTutorialLayout({ user, header, playNavbar, children, fkPlaylist, allPlaylistInTutor , showTutor}) {
 const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
 return (
@@ -34,6 +34,36 @@ return (
 
                     <div className="hidden sm:flex sm:items-center sm:ms-6">
                         <div className="ms-3 flex relative">
+                                <div className="">
+                                    <button><a className='mr-4' href='/'>Home</a></button>
+                                    <div className="dropdown dropdown-bottom dropdown-end">
+                                        <button tabIndex={0} className="">
+                                            <i class="fa-solid fa-circle-play"></i> Playlist
+                                        </button>
+                                        <ul tabIndex={0}
+                                            className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                                            <p className=' font-bold bg-primary px-1 rounded-2xl'><i
+                                                    class="fa-solid fa-earth-asia"></i> Populer</p>
+                                            {playNavbar.map((list, index) => (
+                                            <li key={index}>
+                                                <a href={`/playlist/${list.name.replace(/ /g, '-' )}`}><img
+                                                        src={`/storage/${list.image}`} alt="Logo"
+                                                        className="w-5 rounded-full" />
+                                                    {list.name}</a>
+                                            </li>
+                                            ))}
+                                            <li>
+                                                <a className='hover:bg-success font-semibold' href='/playlist'>Lihat
+                                                    Yang lain</a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+
+
+                                </div>
+                            <div className="flex">
+                            </div>
                             <div className="text-sm mr-2">
                                 <p>{user.name}</p>
                                 <button className=' flex ml-auto'> { user.typeuser == 1 ? <span
@@ -127,19 +157,47 @@ return (
             <div className="w-full bg-white mt-2 ml-2 shadow-inner rounded-2xl">
                 {children}
             </div>
-            <div className="w-60 bg-white shadow-inner rounded-l-2xl m-2 max-md:hidden">
+            <div className="w-96 bg-white shadow-inner rounded-l-2xl m-2 max-md:hidden">
                 <ul className="menu rounded-box">
+                    <h2 class="font-bold text-lg p-2 ">Playliast {fkPlaylist.name}</h2>
+                    <hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
+                    {allPlaylistInTutor.map((tutor, i) => (
+                    <>
+                        <div key={i} className={`navbar m-1 rounded-lg ${tutor.id===showTutor.id ? 'bg-primary'
+                            : 'bg-base-100' }`}>
+                            <div className="flex-1 max-w-[200px] overflow-hidden">
+                                <a
+                                    className="btn btn-ghost text-sm overflow-hidden whitespace-nowrap overflow-ellipsis">
+                                    {tutor.title}
+                                </a>
+                            </div>
 
-                    <li>
-                        <a href='/admin/tutorials'>
-                            <i class="fa-solid fa-house "></i>
-                            Back To Post
-                        </a>
-                    </li>
-
+                            <div className="flex-none gap-2">
+                                <div className="dropdown dropdown-end">
+                                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                        <div className="w-10 rounded-full">
+                                            <img alt="Tailwind CSS Navbar component" src={`/storage/${tutor.image}`} />
+                                        </div>
+                                    </div>
+                                    <ul tabIndex={0}
+                                        className="mt-3 z-[1] p-2 border border-primary shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                                        <li>
+                                            <a className="justify-between">
+                                                <i class="fa-solid fa-calendar-check" /> <span
+                                                    className="-ml-10">{tutor.updated_at.split("T")[0]}</span>
+                                                <span className="badge">{i+1}</span>
+                                            </a>
+                                        </li>
+                                        <li><a href={`/author/${tutor.author.name.replace(/ /g, '-' )}`}><i
+                                                    class="fa-solid fa-user-pen"></i>{tutor.author.name}</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                    ))}
                 </ul>
             </div>
-
         </main>
     </div>
 </>
